@@ -3,8 +3,7 @@ require "./start"
 
 start = Start.new
 
-puts "Welcome to MASTERMIND \n\n"
-puts "Would you like to (p)lay, read the (i)nstructions. or (q)uit? \n"
+puts start.welcome_message
 
 proceed = true
 
@@ -17,7 +16,7 @@ while proceed == true do
     elsif response == "i" || response =="instructions"
         start.instructions
     elsif response == "q" || response == "quit"
-        puts "Goodbye"
+        puts start.goodbye_message
         proceed = false
     else
         puts "Please enter a valid choice"

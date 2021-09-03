@@ -14,9 +14,7 @@ class Start
     end
 
     def start_game
-        puts "I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow."
-        puts "Use (q)uit at any time to end the game."
-        puts "What's your guess?"
+        puts start_message
 
         proceed = true
 
@@ -31,35 +29,35 @@ class Start
             if guess == secret.pattern
                 end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
                 play_time = end_time - start_time
-                puts "Congratulations! You guessed the sequence '#{secret.pattern}' in #{guess_num} guesses over #{time_format(play_time)}"
-                puts "Do you want to (p)lay again or (q)uit?"
-
+                
+                puts win_message(secret, guess_num, play_time)
+                
                 secret = Secret.new(randomize)
 
                 response = gets.chomp
 
                 if response == "p" || response == "play"
                     puts "Starting a new game!"
+                    puts start_message
                 elsif response == "q" || response == "quit"
                     proceed = false
-                    puts "Goodbye."
+                    puts goodbye_message
                 else
                     proceed = false
-                    puts "Goodbye"
+                    puts goodbye_message
                 end
             elsif guess == "Q" || guess == "QUIT"
-                puts "Goodbye"
+                puts goodbye_message
                 proceed = false
             elsif guess == "C" || guess == "CHEAT"
                 puts secret.pattern
             elsif guess.length < 4
-                puts "Guess is too short. Must be 4 letters; guess again."
+                puts wrong_length(guess)
             elsif guess.length > 4
-                puts "Guess is too long. Must be 4 letters; guess again."
+                puts wrong_length(guess)
             elsif secret.position(guess) < 4
                 @guess_num += 1
-                puts "'#{guess}' has #{secret.elements(guess)} of the correct elements with #{secret.position(guess)} in the correct positions"
-                puts "You've taken #{guess_num} guess"
+                puts turn_message(secret, guess, guess_num)
             else
                 puts "Please enter a valid guess."
             end
@@ -80,5 +78,35 @@ class Start
         random_secret += letters.sample
       end
       return random_secret
+    end
+
+    def start_message
+        "I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow. \nUse (q)uit at any time to end the game. \nWhat's your guess?"
+    end
+
+    def goodbye_message
+        "Goodbye."
+    end
+
+    def wrong_length(guess_length)
+        if guess_length.length < 4
+            "Guess is too short. Guess again."
+        elsif guess_length.length > 4
+            "Guess is too long. Guess again"
+        else
+            "Error: you shouldn't be here"
+        end
+    end
+
+    def turn_message(turn_secret, wrong_guess, guess_turn)
+        "'#{wrong_guess}' has #{turn_secret.elements(wrong_guess)} of the correct elements with #{turn_secret.position(wrong_guess)} in the correct positions. \nYou've taken #{guess_turn} guess."
+    end
+
+    def win_message(win_secret, win_turn, win_time)
+        "Congratulations! You guessed the sequence '#{win_secret.pattern}' in #{win_turn} guesses over #{time_format(win_time)} \nDo you want to (p)lay again or (q)uit?"
+    end
+
+    def welcome_message
+        "Welcome to MASTERMIND \n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit? \n"
     end
 end
