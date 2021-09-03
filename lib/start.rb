@@ -1,9 +1,7 @@
 class Start
-    attr_reader :secret,
-                :guess_num
+    attr_reader :guess_num
 
-    def initialize(secret)
-        @secret = secret
+    def initialize
         @guess_num = 0
     end
 
@@ -24,6 +22,8 @@ class Start
 
         start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
+        secret = Secret.new(randomize)
+
         while proceed == true do
             guess = gets.chomp
             guess.upcase!
@@ -33,6 +33,8 @@ class Start
                 play_time = end_time - start_time
                 puts "Congratulations! You guessed the sequence '#{secret.pattern}' in #{guess_num} guesses over #{time_format(play_time)}"
                 puts "Do you want to (p)lay again or (q)uit?"
+
+                secret = Secret.new(randomize)
 
                 response = gets.chomp
 
@@ -45,13 +47,11 @@ class Start
                     proceed = false
                     puts "Goodbye"
                 end
-            elsif guess == "q" || guess == "quit"
+            elsif guess == "Q" || guess == "QUIT"
                 puts "Goodbye"
                 proceed = false
-            elsif guess == "c" || guess == "cheat"
-                puts secret.patern
-                puts "Nice try! Try again."
-                proceed = false
+            elsif guess == "C" || guess == "CHEAT"
+                puts secret.pattern
             elsif guess.length < 4
                 puts "Guess is too short. Must be 4 letters; guess again."
             elsif guess.length > 4
@@ -70,5 +70,15 @@ class Start
       minutes = seconds / 60
       seconds_2 = (minutes - minutes.floor) * 60
       return "#{minutes.floor} minutes, #{seconds_2.round} seconds."
+    end
+
+    def randomize
+      letters = ["R", "G", "B", "Y"]
+      random_secret = ""
+
+      4.times do
+        random_secret += letters.sample
+      end
+      return random_secret
     end
 end
