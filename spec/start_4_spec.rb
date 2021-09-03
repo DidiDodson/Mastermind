@@ -1,13 +1,13 @@
 require "Rspec"
 require "./lib/start_4"
 
-describe "Start" do
+describe Start_4 do
     describe "#initialize" do
         it "is an instance of Start" do
 
             start = Start_4.new
 
-            expect(start).to be_a Start
+            expect(start).to be_a Start_4
         end
 
         it "contains a secret" do

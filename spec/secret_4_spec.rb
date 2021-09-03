@@ -1,11 +1,11 @@
 require 'Rspec'
 require './lib/secret_4'
 
-describe Secret do
+describe Secret_4 do
   describe '#initialize' do
     it 'is a secret' do
       secret = Secret_4.new("GRRB")
-      expect(secret).to be_a(Secret)
+      expect(secret).to be_a(Secret_4)
     end
 
     it 'has a pattern' do
