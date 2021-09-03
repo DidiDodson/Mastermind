@@ -1,9 +1,7 @@
 require "./secret"
 require "./start"
 
-secret = Secret.new("RGGB")
-
-start = Start.new(secret)
+start = Start.new
 
 puts "Welcome to MASTERMIND \n\n"
 puts "Would you like to (p)lay, read the (i)nstructions. or (q)uit? \n"
