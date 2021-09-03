@@ -1,4 +1,4 @@
-class Secret
+class Secret_4
   attr_reader :pattern
 
   def initialize(pattern)

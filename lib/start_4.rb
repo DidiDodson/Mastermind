@@ -1,4 +1,4 @@
-class Start
+class Start_4
     attr_reader :guess_num
 
     def initialize
@@ -20,7 +20,7 @@ class Start
 
         start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
-        secret = Secret.new(randomize)
+        secret = Secret_4.new(randomize)
 
         while proceed == true do
             guess = gets.chomp
@@ -32,7 +32,7 @@ class Start
                 
                 puts win_message(secret, guess_num, play_time)
                 
-                secret = Secret.new(randomize)
+                secret = Secret_4.new(randomize)
 
                 response = gets.chomp
 

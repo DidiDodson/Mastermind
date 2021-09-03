@@ -1,7 +1,7 @@
-require "./secret"
-require "./start"
+require "./secret_4"
+require "./start_4"
 
-start = Start.new
+start = Start_4.new
 
 puts start.welcome_message
 
