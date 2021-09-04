@@ -6,11 +6,7 @@ class Start_4
     end
 
     def instructions
-        puts "I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow."
-        puts "In order to submit a guess enter in a string of four letters."
-        puts "For example: 'RGBY' \n\n"
-        puts "In order to quit the game enter 'p'"
-        puts "Would you like to (p)lay, read the (i)nstructions. or (q)uit?"
+        "The game is played by guessing a sequence of colors that I have created! \nThere are three levels of difficulty: beginner, intermediate, and advanced. \nThe beginner difficulty has four elements in the sequence with four possible colors. \nThe intermediate difficulty has six elements with five possible colors. \nThe advanced difficulty has eight elements with six possible colors. \nAn example guess for the intermediate difficulty would look like 'BGGYO'. \nWould you like to (p)lay, read the (i)nstructions. or (q)uit?"
     end
 
     def start_game
@@ -108,5 +104,9 @@ class Start_4
 
     def welcome_message
         "Welcome to MASTERMIND \n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit? \n"
+    end
+
+    def difficulty_message
+        "What difficulty would you like to play? (b)eginner, (i)ntermediate, or (a)dvanced?"
     end
 end
