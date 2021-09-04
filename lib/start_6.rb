@@ -35,11 +35,12 @@ class Start_6
                 secret = Secret_6.new(randomize)
 
                 response = gets.chomp
+                response.upcase!
 
-                if response == "p" || response == "play"
+                if response == "P" || response == "PLAY"
                     puts "Starting a new game!"
                     puts start_message
-                elsif response == "q" || response == "quit"
+                elsif response == "Q" || response == "QUIT"
                     proceed = false
                     puts goodbye_message
                 else
