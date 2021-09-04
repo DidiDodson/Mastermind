@@ -1,4 +1,4 @@
-class Start
+class Start_6
     attr_reader :guess_num
 
     def initialize
@@ -6,9 +6,9 @@ class Start
     end
 
     def instructions
-        puts "I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow."
-        puts "In order to submit a guess enter in a string of four letters."
-        puts "For example: 'RGBY' \n\n"
+        puts "I have generated a beginner sequence with six elements made up of: (r)ed, (g)reen, (b)lue, (y)ellow, and (o)range."
+        puts "In order to submit a guess enter in a string of six letters."
+        puts "For example: 'RGBYOR' \n\n"
         puts "In order to quit the game enter 'p'"
         puts "Would you like to (p)lay, read the (i)nstructions. or (q)uit?"
     end
@@ -20,7 +20,7 @@ class Start
 
         start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
-        secret = Secret.new(randomize)
+        secret = Secret_6.new(randomize)
 
         while proceed == true do
             guess = gets.chomp
@@ -32,14 +32,15 @@ class Start
                 
                 puts win_message(secret, guess_num, play_time)
                 
-                secret = Secret.new(randomize)
+                secret = Secret_6.new(randomize)
 
                 response = gets.chomp
+                response.upcase!
 
-                if response == "p" || response == "play"
+                if response == "P" || response == "PLAY"
                     puts "Starting a new game!"
                     puts start_message
-                elsif response == "q" || response == "quit"
+                elsif response == "Q" || response == "QUIT"
                     proceed = false
                     puts goodbye_message
                 else
@@ -51,11 +52,11 @@ class Start
                 proceed = false
             elsif guess == "C" || guess == "CHEAT"
                 puts secret.pattern
-            elsif guess.length < 4
+            elsif guess.length < 6
                 puts wrong_length(guess)
-            elsif guess.length > 4
+            elsif guess.length > 6
                 puts wrong_length(guess)
-            elsif secret.position(guess) < 4
+            elsif secret.position(guess) < 6
                 @guess_num += 1
                 puts turn_message(secret, guess, guess_num)
             else
@@ -71,17 +72,17 @@ class Start
     end
 
     def randomize
-      letters = ["R", "G", "B", "Y"]
+      letters = ["R", "G", "B", "Y", "O"]
       random_secret = ""
 
-      4.times do
+      6.times do
         random_secret += letters.sample
       end
       return random_secret
     end
 
     def start_message
-        "I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow. \nUse (q)uit at any time to end the game. \nWhat's your guess?"
+        "I have generated a intermediate sequence with six elements made up of: (r)ed, (g)reen, (b)lue, (y)ellow, and (o)range. \nUse (q)uit at any time to end the game. \nWhat's your guess?"
     end
 
     def goodbye_message
@@ -89,9 +90,9 @@ class Start
     end
 
     def wrong_length(guess_length)
-        if guess_length.length < 4
+        if guess_length.length < 6
             "Guess is too short. Guess again."
-        elsif guess_length.length > 4
+        elsif guess_length.length > 6
             "Guess is too long. Guess again"
         else
             "Error: you shouldn't be here"
