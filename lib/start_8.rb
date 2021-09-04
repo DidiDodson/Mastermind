@@ -75,7 +75,7 @@ class Start_8
       letters = ["R", "G", "B", "Y", "O", "M"]
       random_secret = ""
 
-      6.times do
+      8.times do
         random_secret += letters.sample
       end
       return random_secret

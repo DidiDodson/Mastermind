@@ -18,7 +18,7 @@ describe Secret_8 do
       it 'returns correct number of elements' do
         secret = Secret_8.new("GRRBOOMM")
         guess = "RGRYOOOO"
-        expect(secret.elements(guess)).to eq(5)
+        expect(secret.elements(guess)).to eq(7)
       end
     end
   
