@@ -120,7 +120,7 @@ class Start_6
 
     def add_winner(name, pattern, guess_num, time)
       CSV.open("player.txt", "a") do |csv|
-        csv << [name, pattern, guess_num.to_s, time(time)]
+        csv << [name, pattern, guess_num.to_s, time.to_s]
       end
     end
 
