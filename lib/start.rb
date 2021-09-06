@@ -30,6 +30,8 @@ class Start
                 end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
                 play_time = end_time - start_time
 
+
+
                 puts win_message(secret, guess_num, play_time)
 
                 secret = Secret.new(randomize)
@@ -109,4 +111,5 @@ class Start
     def welcome_message
         "Welcome to MASTERMIND \n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit? \n"
     end
+
 end
