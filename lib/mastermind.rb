@@ -4,6 +4,7 @@ require "./secret_8"
 require "./start_4"
 require "./start_6"
 require "./start_8"
+require "CSV"
 
 start_4 = Start_4.new
 

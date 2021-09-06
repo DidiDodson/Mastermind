@@ -29,12 +29,17 @@ class Start_6
             if guess == secret.pattern
                 end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
                 play_time = end_time - start_time
-                
-                puts win_message(secret, guess_num, play_time)
-                
+
+                puts "Congratulations! You've guessed the sequence! What's your name?"
+                name = gets.chomp
+                add_winner(name, secret.pattern, guess_num, play_time)
+
+                puts average_message(name, secret, guess_num, play_time, average_time, average_turns)
+
                 secret = Secret_6.new(randomize)
 
                 response = gets.chomp
+                @guess_num = 0
                 response.upcase!
 
                 if response == "P" || response == "PLAY"
@@ -58,7 +63,7 @@ class Start_6
                 puts wrong_length(guess)
             elsif secret.position(guess) < 6
                 @guess_num += 1
-                puts turn_message(secret, guess, guess_num)
+                puts turn_message(secret, guess, @guess_num)
             else
                 puts "Please enter a valid guess."
             end
@@ -68,7 +73,7 @@ class Start_6
     def time_format(seconds)
       minutes = seconds / 60
       seconds_2 = (minutes - minutes.floor) * 60
-      return "#{minutes.floor} minutes, #{seconds_2.round} seconds."
+      return "#{minutes.floor} minutes, #{seconds_2.round} seconds"
     end
 
     def randomize
@@ -109,5 +114,66 @@ class Start_6
 
     def welcome_message
         "Welcome to MASTERMIND \n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit? \n"
+    end
+
+    def add_winner(name, pattern, guess_num, time)
+      CSV.open("player.txt", "a") do |csv|
+        csv << [name, pattern, guess_num.to_s, csv_time(time)]
+      end
+    end
+
+    def csv_time(seconds)
+      minutes = seconds / 60
+      seconds_2 = (minutes - minutes.floor) * 60
+      return "#{minutes.floor}m#{seconds_2.round}s"
+    end
+
+    def average_time
+      table = CSV.parse(File.read("player.txt"), headers: true)
+      table.by_col!
+      times = table['time']
+      counter = 0.0
+      sum = 0.0
+
+      av_times = times.map do |time|
+        time.to_f
+      end
+
+      av_times.each do |av_time|
+        sum += av_time
+        counter += 1.0
+      end
+    sum / counter
+    end
+
+    def average_turns
+      table = CSV.parse(File.read("player.txt"), headers:true)
+      table.by_col!
+      turns = table['guess_num']
+      counter = 0
+      sum = 0
+
+      av_turns = turns.map do |turn|
+
+        turn.to_i
+      end
+
+      av_turns.each do |av_turn|
+        sum += av_turn
+        counter += 1
+      end
+    sum / counter
+    end
+
+    def average_message(win_name, win_secret, win_turn, win_time, win_average_time, win_average_turn)
+      "#{win_name}, you guessed the sequence '#{win_secret.pattern}' in #{win_turn} guesses over #{time_format(win_time)}. That's #{time_format(player_time(win_time, win_average_time))} faster and #{player_turns(win_turn, win_average_turn)} guesses fewer than the average."
+    end
+
+    def player_time(win_time, win_average_time)
+      win_time - win_average_time
+    end
+
+    def player_turns(win_turn, win_average_turn)
+      win_turn - win_average_turn
     end
 end
